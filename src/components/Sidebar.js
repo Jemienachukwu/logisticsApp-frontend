@@ -12,108 +12,54 @@ import {
 import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   //   const [active, setActive] = useState(false);
+
+  const links = [
+    {
+      name: "Dashboard",
+      link: "/",
+      icon: MdOutlineDashboard,
+    },
+    {
+      name: "Orders",
+      link: "/orders",
+      icon: GrUnorderedList,
+    },
+    {
+      name: "Dashboard",
+      link: "/m",
+      icon: MdOutlineDashboard,
+    },
+    {
+      name: "Dashboard",
+      link: "/k",
+      icon: MdOutlineDashboard,
+    },
+  ];
   return (
     <Container>
       <Text my="30px" fontSize="lg" color="#35B368" fontWeight="bold">
         LOGISTICS APP
       </Text>
       <List spacing={4}>
-        <ListItem p="2">
-          <NavLink
-            to="/"
-            style={({ isActive }) =>
-              isActive
-                ? { borderLeft: "2px solid #35B368", color: "#868686" }
-                : undefined
-            }
-          >
-            <ListIcon as={MdOutlineDashboard} color="#35B368" />
-            Dashboard
-          </NavLink>
-        </ListItem>
-        <ListItem p="2">
-          <NavLink
-            to="/orders"
-            style={({ isActive }) =>
-              isActive
-                ? { borderLeft: "2px solid #35B368", color: "#868686" }
-                : undefined
-            }
-          >
-            <ListIcon as={GrUnorderedList} color="#35B368" />
-            Orders
-          </NavLink>
-        </ListItem>
-        <ListItem p="2">
-          <NavLink
-            to="/contact"
-            style={({ isActive }) =>
-              isActive
-                ? { borderLeft: "2px solid #35B368", color: "#868686" }
-                : undefined
-            }
-          >
-            <ListIcon as={MdOutlineDashboard} color="#35B368" />
-            Contact
-          </NavLink>
-        </ListItem>
-        <ListItem p="2">
-          <NavLink
-            to="/driver"
-            style={({ isActive }) =>
-              isActive
-                ? { borderLeft: "2px solid #35B368", color: "#868686" }
-                : undefined
-            }
-          >
-            <ListIcon as={MdOutlineDashboard} color="#35B368" />
-            Driver
-          </NavLink>
-        </ListItem>
-        {/* <NavLink
-          to="/orders"
-          style={({ isActive }) =>
-            isActive ? { borderLeft: "2px solid #35B368", color:'#868686' } : undefined
-          }
-        >
+        {links.map((item, i) => (
           <ListItem p="2">
-            <ListIcon as={GrUnorderedList} color="#35B368" />
-            Orders
+            <NavLink
+              to={item.link}
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      borderLeft: "2px solid #35B368",
+                      color: "#868686",
+                      paddingLeft: "10px",
+                    }
+                  : undefined
+              }
+            >
+              <ListIcon as={item.icon} color="#35B368" />
+              {item.name}
+            </NavLink>
           </ListItem>
-        </NavLink> */}
-        {/* <NavLink
-          to="/orders"
-          style={({ isActive }) =>
-            isActive ? setActive(true) : setActive(false)
-          }
-        >
-          <ListItem p="2" borderLeft={active ? "2px solid, color:'#868686' #35B368" : undefined}>
-            <ListIcon as={GrUnorderedList} color="#35B368" />
-            Orders
-          </ListItem>
-        </NavLink>
-        <NavLink
-          to="/contact"
-          style={({ isActive }) =>
-            isActive ? setActive(true) : setActive(false)
-          }
-        >
-          <ListItem p="2" borderLeft={active ? "2px solid, color:'#868686' #35B368" : undefined}>
-            <ListIcon as={MdOutlineDashboard} color="#35B368" />
-            Contact
-          </ListItem>
-        </NavLink>
-        <NavLink
-          to="/driver"
-          style={({ isActive }) =>
-            isActive ? setActive(true) : setActive(false)
-          }
-        >
-          <ListItem p="2" borderLeft={active ? "2px solid, color:'#868686' #35B368" : undefined}>
-            <ListIcon as={MdOutlineDashboard} color="#35B368" />
-            Driver
-          </ListItem>
-        </NavLink> */}
+        ))}
       </List>
       <Box></Box>
     </Container>

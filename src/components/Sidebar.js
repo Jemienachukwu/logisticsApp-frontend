@@ -10,13 +10,12 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/Apollo-light.svg";
 const Sidebar = () => {
-  //   const [active, setActive] = useState(false);
-
   const links = [
     {
       name: "Dashboard",
-      link: "/",
+      link: "/home",
       icon: MdOutlineDashboard,
     },
     {
@@ -25,32 +24,32 @@ const Sidebar = () => {
       icon: GrUnorderedList,
     },
     {
-      name: "Dashboard",
-      link: "/m",
+      name: "Contact",
+      link: "/contact",
       icon: MdOutlineDashboard,
     },
     {
-      name: "Dashboard",
-      link: "/k",
+      name: "Dispacher",
+      link: "/dispatcher",
       icon: MdOutlineDashboard,
     },
   ];
   return (
-    <Container>
+    <Container width="100%">
       <Text my="30px" fontSize="lg" color="#35B368" fontWeight="bold">
-        LOGISTICS APP
+        <img src={logo} alt="logo" />
       </Text>
-      <List spacing={4}>
+      <List spacing="2">
         {links.map((item, i) => (
-          <ListItem p="2">
+          <ListItem p="2" key={item.name}>
             <NavLink
+              className="navItems"
               to={item.link}
               style={({ isActive }) =>
                 isActive
                   ? {
-                      borderLeft: "2px solid #35B368",
+                      borderBottom: "2px solid #35B368",
                       color: "#868686",
-                      paddingLeft: "10px",
                     }
                   : undefined
               }

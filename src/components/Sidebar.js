@@ -1,67 +1,83 @@
 import React from "react";
-import { MdOutlineDashboard } from "react-icons/md";
-import { GrUnorderedList } from "react-icons/gr";
+
 import {
-  List,
-  ListItem,
-  ListIcon,
-  Container,
-  Text,
-  Box,
-} from "@chakra-ui/react";
+  RiAddCircleFill,
+  RiUserReceivedFill,
+  RiEBike2Fill,
+  RiLayout2Fill,
+  RiFileList2Fill,
+} from "react-icons/ri";
+import { List, ListItem, ListIcon, Text, Box } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/Apollo-light.svg";
+// import logo from "../assets/Apollo-light.svg";
 const Sidebar = () => {
   const links = [
     {
       name: "Dashboard",
-      link: "/home",
-      icon: MdOutlineDashboard,
+      link: "/dashboard",
+      icon: RiLayout2Fill,
+    },
+    {
+      name: "place Order",
+      link: "/placeorder",
+      icon: RiAddCircleFill,
     },
     {
       name: "Orders",
       link: "/orders",
-      icon: GrUnorderedList,
+      icon: RiFileList2Fill,
     },
     {
-      name: "Contact",
+      name: "Receiver",
       link: "/contact",
-      icon: MdOutlineDashboard,
+      icon: RiUserReceivedFill,
     },
     {
       name: "Dispacher",
       link: "/dispatcher",
-      icon: MdOutlineDashboard,
+      icon: RiEBike2Fill,
     },
   ];
   return (
-    <Container width="100%">
-      <Text my="30px" fontSize="lg" color="#35B368" fontWeight="bold">
-        <img src={logo} alt="logo" />
+    <Box width="100%">
+      <Text
+        my="30px"
+        fontSize="lg"
+        color="#35B368"
+        fontWeight="bold"
+        textAlign="center"
+      >
+        Apollo Couriers
+        {/* <img src={logo} alt="logo" /> */}
       </Text>
-      <List spacing="2">
+      <List spacing="2" w="100%">
         {links.map((item, i) => (
-          <ListItem p="2" key={item.name}>
+          <ListItem key={item.name} py="3">
             <NavLink
               className="navItems"
               to={item.link}
               style={({ isActive }) =>
                 isActive
                   ? {
-                      borderBottom: "2px solid #35B368",
-                      color: "#868686",
+                      borderLeft: "4px solid #35B368",
+                      color: "#35B368",
+                      paddingLeft: "20px",
                     }
-                  : undefined
+                  : {
+                      color: "#868686",
+                      paddingLeft: "20px",
+                    }
               }
             >
-              <ListIcon as={item.icon} color="#35B368" />
+              <ListIcon as={item.icon} />
+
               {item.name}
             </NavLink>
           </ListItem>
         ))}
       </List>
       <Box></Box>
-    </Container>
+    </Box>
   );
 };
 

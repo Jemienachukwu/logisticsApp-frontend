@@ -17,7 +17,6 @@ import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../actions/UserAction";
 import { useDispatch, useSelector } from "react-redux";
-// import Message from "../components/Alert";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -28,10 +27,10 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const { userInfo, loading, error } = useSelector((state) => state.userLogin);
-
+  console.log(userInfo);
   useEffect(() => {
     if (userInfo) {
-      navigate("/home");
+      navigate("/dashboard");
     }
   }, [userInfo, navigate]);
 
@@ -47,56 +46,52 @@ const LoginScreen = () => {
         LOGIN
       </Text>
       {error ? <Alert status="error">{error}</Alert> : null}
-      <FormControl>
-        <InputGroup my="6">
-          <Input
-            size="md"
-            variant="flushed"
-            type="email"
-            placeholder="Enter Your Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </InputGroup>
-        <InputGroup mb="4">
-          <Input
-            size="md"
-            variant="flushed"
-            type={showPassword}
-            placeholder="Enter Your Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <InputGroup my="6">
+            <Input
+              size="md"
+              variant="flushed"
+              type="email"
+              placeholder="Enter Your Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputGroup>
+          <InputGroup mb="4">
+            <Input
+              size="md"
+              variant="flushed"
+              type={showPassword}
+              placeholder="Enter Your Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <InputRightElement
-            _hover={{ cursor: "pointer" }}
-            children={
-              showPassword === "password" ? (
-                <GrFormViewHide
-                  pointerEvents="visible"
-                  onClick={() => setShowPassword("text")}
-                />
-              ) : (
-                <BsFillEyeFill
-                  pointerEvents="visible"
-                  onClick={() => setShowPassword("password")}
-                />
-              )
-            }
-          />
-        </InputGroup>
-        {loading ? (
-          <Spinner size="xl" />
-        ) : (
-          <Button
-            onClick={handleSubmit}
-            bg="#35B368"
-            color="#fff"
-            width="100%"
-            my="5"
-          >
-            Login
-          </Button>
-        )}
-      </FormControl>
+            <InputRightElement
+              _hover={{ cursor: "pointer" }}
+              children={
+                showPassword === "password" ? (
+                  <GrFormViewHide
+                    pointerEvents="visible"
+                    onClick={() => setShowPassword("text")}
+                  />
+                ) : (
+                  <BsFillEyeFill
+                    pointerEvents="visible"
+                    onClick={() => setShowPassword("password")}
+                  />
+                )
+              }
+            />
+          </InputGroup>
+          {loading ? (
+            <Spinner size="xl" />
+          ) : (
+            <Button bg="#35B368" color="#fff" width="100%" my="5" type="submit">
+              Login
+            </Button>
+          )}
+        </FormControl>
+      </form>
       Don't have an account ? <Link to="/register">Register</Link>
     </Container>
   );

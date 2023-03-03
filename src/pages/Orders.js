@@ -1,18 +1,27 @@
 import {
-  Container,
-  Text,
-  Grid,
-  Box,
-  Button,
-  Input,
+  // Box,
+  // Button,
   Spinner,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Alert,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Menu,
 } from "@chakra-ui/react";
-import { CiDeliveryTruck, CiSearch } from "react-icons/ci";
-import { VscPackage } from "react-icons/vsc";
+import { RxCross2, RxCheck } from "react-icons/rx";
+import { SlOptionsVertical } from "react-icons/sl";
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ListOrderAction } from "../actions/OrderActions";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -25,63 +34,58 @@ const Orders = () => {
 
   return (
     <div>
-      <Container>
-        <Text mb="6">Active orders</Text>
-        <Box position="relative" display="flex" justifyContent="space-between">
-          <Box position="absolute" zIndex="1" top="13px" left="3px">
-            <CiSearch />
-          </Box>
-          <Input variant="outline" placeholder="Search" bg="#fff" pl="6" />
-        </Box>
+      <>
         {loading ? (
           <Spinner />
         ) : error ? (
-          <Text>{error}</Text>
+          <Alert status="error">{error}</Alert>
         ) : (
-          orders?.map((items) => (
-            <Grid
-              my="4"
-              bg="white"
-              p="3"
-              gap="3"
-              borderRadius="6px"
-              key={items.id}
-            >
-              <Box display="flex" justifyContent="space-between">
-                <Text as="b">ID {items.id}</Text>{" "}
-                {items.isPaid && (
-                  <Button bg="#35B368" color="#fff" height="6">
-                    PAID
-                  </Button>
-                )}
-              </Box>
-
-              <Text fontSize="sm"> {items.itemName}</Text>
-              <Text as="sub" fontWeight="bold" color="#868686">
-                {items.category}
-              </Text>
-              <Box as="span" display="flex" alignItems="center" gap="2" my="1">
-                <Text as="sub" color="#868686">
-                  {items.deliveredAt}
-                </Text>
-                <CiDeliveryTruck />
-                <Text as="sub" color="#868686">
-                  {items.shippingAddress}
-                </Text>
-              </Box>
-              <Box as="span" display="flex" alignItems="center" gap="2" my="1">
-                <Text as="sub" color="#868686">
-                  {items.deliveredAt}
-                </Text>
-                <VscPackage />
-                <Text as="sub" color="#868686">
-                  {items.deliveryAddress}
-                </Text>
-              </Box>
-            </Grid>
-          ))
+          <TableContainer w="100%">
+            <Table variant="striped" colorScheme="gray">
+              <Thead>
+                <Tr>
+                  <Th>Order Item</Th>
+                  <Th>Type of</Th>
+                  <Th>Payer</Th>
+                  <Th>isDelivered</Th>
+                  <Th>isPaid</Th>
+                  <Th>Mode of payment</Th>
+                  <Th>Amount</Th>
+                  <Th> </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {orders?.map((items) => (
+                  <Tr key={items.id}>
+                    <Td>{items.itemName}</Td>
+                    <Td>{items.category}</Td>
+                    <Td>{items.payer}</Td>
+                    <Td>{items.deliveredAt}</Td>
+                    <Td>{items.isPaid ? <RxCheck /> : <RxCross2 />}</Td>
+                    <Td>{items.paymentMethod}</Td>
+                    <Td>₦ {items.price}</Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton>
+                          <SlOptionsVertical />
+                        </MenuButton>
+                        <MenuList>
+                          <Link to={`/order/${items.id}`}>
+                            <MenuItem>Details</MenuItem>
+                          </Link>
+                          <MenuItem bg="tomato" color="#fff">
+                            Cancel order
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         )}
-      </Container>
+      </>
     </div>
   );
 };

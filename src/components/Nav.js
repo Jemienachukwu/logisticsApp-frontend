@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  IconButton,
   Menu,
   MenuButton,
   MenuItem,
@@ -10,45 +11,54 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../actions/UserAction";
-const Nav = () => {
+import { userLogout } from "../actions/UserAction";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { HiUserCircle } from "react-icons/hi";
+
+const Nav = ({ handleToggle, showHam }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(userLogout());
     navigate("/");
   };
-  const name = userInfo.fullName.split(" ");
+
+  const name = userInfo?.fullName.split(" ");
   const fistName = name[0];
-  console.log(fistName);
   return (
     <Box display="flex" justifyContent="flex-end" py="2" px="8">
-      {userInfo ? (
-        <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<IoMdArrowDropdown />}
-            bg="transparent"
-            _hover={{ bg: "transparent" }}
-          >
-            {userInfo.fullName.length >= 9 ? fistName : userInfo.fullName}
-          </MenuButton>
-          <MenuList>
-            <Link to="/profile">
-              <MenuItem>Profile</MenuItem>
-            </Link>
-            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-          </MenuList>
-        </Menu>
-      ) : (
-        <Link to="/login">
-          <Button bg="#000" color="#fff" _hover={{ bg: "#000" }}>
-            Login
-          </Button>{" "}
-        </Link>
-      )}
+      <Menu>
+        <MenuButton
+          as={Button}
+          leftIcon={<HiUserCircle />}
+          rightIcon={<IoMdArrowDropdown />}
+          bg="transparent"
+          _hover={{ bg: "transparent", color: "#35B368" }}
+        >
+          Hi, {fistName}
+        </MenuButton>
+        <MenuList>
+          <Link to="/profile">
+            <MenuItem>Profile</MenuItem>
+          </Link>
+          <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+        </MenuList>
+      </Menu>
+      <Box display={showHam ? "none" : "block"}>
+        <IconButton
+          onClick={handleToggle}
+          display={["flex", "flex", "flex", "none"]}
+          aria-label="Open Menu"
+          size="md"
+          textAlign="center"
+          bg="#35B368"
+          fontSize="16"
+          color="#fff"
+          icon={<GiHamburgerMenu />}
+        />
+      </Box>
     </Box>
   );
 };

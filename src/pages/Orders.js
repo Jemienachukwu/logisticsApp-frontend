@@ -1,6 +1,4 @@
 import {
-  // Box,
-  // Button,
   Spinner,
   Table,
   Thead,
@@ -18,7 +16,6 @@ import {
 import { RxCross2, RxCheck } from "react-icons/rx";
 import { SlOptionsVertical } from "react-icons/sl";
 import React, { useEffect } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { ListOrderAction } from "../actions/OrderActions";
 import { Link } from "react-router-dom";

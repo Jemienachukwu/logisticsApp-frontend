@@ -7,10 +7,21 @@ import {
   RiLayout2Fill,
   RiFileList2Fill,
 } from "react-icons/ri";
-import { List, ListItem, ListIcon, Text, Box } from "@chakra-ui/react";
+import { AiOutlineClose } from "react-icons/ai";
+
+import {
+  List,
+  ListItem,
+  ListIcon,
+  Text,
+  Box,
+  Flex,
+  Spacer,
+  IconButton,
+} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-// import logo from "../assets/Apollo-light.svg";
-const Sidebar = () => {
+
+const Sidebar = ({ handleToggle }) => {
   const links = [
     {
       name: "Dashboard",
@@ -40,17 +51,36 @@ const Sidebar = () => {
   ];
   return (
     <Box width="100%">
-      <Text
-        my="30px"
-        fontSize="lg"
-        color="#35B368"
-        fontWeight="bold"
-        textAlign="center"
+      <Flex alignItems="center">
+        <Spacer />
+        <Text
+          my="30px"
+          fontSize="lg"
+          color="#35B368"
+          fontWeight="bold"
+          textAlign="center"
+        >
+          Apollo Couriers
+        </Text>
+        <Spacer />
+        <Box mr="2">
+          <IconButton
+            onClick={handleToggle}
+            display={["flex", "flex", "flex", "none"]}
+            aria-label="close Menu"
+            size="lg"
+            bg="#35B368"
+            color="#fff"
+            icon={<AiOutlineClose />}
+          />
+        </Box>
+      </Flex>
+      <List
+        spacing="2"
+        w="100%"
+        alignItems="center"
+        display={["none", "none", "block", "block"]}
       >
-        Apollo Couriers
-        {/* <img src={logo} alt="logo" /> */}
-      </Text>
-      <List spacing="2" w="100%">
         {links.map((item, i) => (
           <ListItem key={item.name} py="3">
             <NavLink
@@ -70,13 +100,43 @@ const Sidebar = () => {
               }
             >
               <ListIcon as={item.icon} />
-
               {item.name}
             </NavLink>
           </ListItem>
         ))}
       </List>
-      <Box></Box>
+
+      <List
+        spacing="2"
+        w="100%"
+        alignItems="center"
+        display={["block", "block", "none", "none"]}
+      >
+        {links.map((item, i) => (
+          <ListItem key={item.name} py="3">
+            <NavLink
+              className="navItems"
+              onClick={handleToggle}
+              to={item.link}
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      borderLeft: "4px solid #35B368",
+                      color: "#35B368",
+                      paddingLeft: "20px",
+                    }
+                  : {
+                      color: "#868686",
+                      paddingLeft: "20px",
+                    }
+              }
+            >
+              <ListIcon as={item.icon} />
+              {item.name}
+            </NavLink>
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 };

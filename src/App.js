@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import OrderDetails from "./pages/OrderDetails";
 import Placeorder from "./pages/Placeorder";
 import RequestDeivery from "./pages/RequestDeivery";
+import UserDetails from "./components/UserDetails";
+import UserEdit from "./components/UserEdit";
 function App() {
   return (
     <Router>
@@ -47,10 +49,29 @@ function App() {
           }
         />
         <Route
+          exact
           path="/placeorder/requestdeivery"
           element={
             <Layout>
               <RequestDeivery />
+            </Layout>
+          }
+        />
+
+        <Route
+          exact
+          path="/profile"
+          element={
+            <Layout>
+              <UserDetails />
+            </Layout>
+          }
+        />
+        <Route
+          path="/editprofile"
+          element={
+            <Layout>
+              <UserEdit />
             </Layout>
           }
         />

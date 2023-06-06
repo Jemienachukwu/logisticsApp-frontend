@@ -11,35 +11,42 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import PlaceorderSteps from "../components/PlaceorderSteps";
 
 const Placeorder = () => {
   const navigate = useNavigate();
   const [pickUp, setPickUp] = useState("");
   const [deliver, setDeliver] = useState("");
   const [category, setCategory] = useState("");
+  const [deliveryMethod, setDeliveryMethod] = useState("");
 
   const handleSubmit = (e) => {
-    console.log({ pickUp, deliver, category });
+    e.preventDefault();
+    console.log({ pickUp, deliver, category, deliveryMethod });
     navigate("/placeorder/requestdeivery");
   };
+
   const modeOfDelivery = ["Dispatch Rider", "Car", "Van"];
   const products = [
-    { name: "Furniture" },
-    { name: "Food" },
-    { name: "groceroies" },
-    { name: "Skincare" },
-    { name: "Electronics" },
-    { name: "Books" },
-    { name: "Clothing" },
-    { name: "Toys" },
-    { name: "Sporting Goods" },
-    { name: "Office Supplies" },
-    { name: "Home Decor" },
+    "Furniture",
+    "Food",
+    "Groceries",
+    "Skincare",
+    "Electronics",
+    "Books",
+    "Clothing",
+    "Toys",
+    "Sporting Goods",
+    "Office Supplies",
+    "Home Decor",
   ];
+
   return (
     <div>
-      <Container p="15" w="lg" maxW="xl" my="9" bg="#fff">
-        <Text textAlign="center" as="b" my="5">
+      <PlaceorderSteps step1 />
+
+      <Container my="9" bg="#fff">
+        <Text textAlign="center" fontWeight="bold" my="5">
           Place Order
         </Text>
         <form onSubmit={handleSubmit}>
@@ -49,6 +56,7 @@ const Placeorder = () => {
                 size="md"
                 type="text"
                 placeholder="Pickup Address"
+                value={pickUp}
                 onChange={(e) => setPickUp(e.target.value)}
                 required
               />
@@ -63,6 +71,7 @@ const Placeorder = () => {
                 variant="outline"
                 type="text"
                 placeholder="Delivery Address"
+                value={deliver}
                 onChange={(e) => setDeliver(e.target.value)}
                 required
               />
@@ -76,10 +85,11 @@ const Placeorder = () => {
                 placeholder="Select Order Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                required
               >
                 {products.map((item, i) => (
-                  <option key={i} value={item.name}>
-                    {item.name}
+                  <option key={i} value={item}>
+                    {item}
                   </option>
                 ))}
               </Select>
@@ -88,8 +98,9 @@ const Placeorder = () => {
             <InputGroup my="6">
               <Select
                 placeholder="Select delivery method"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={deliveryMethod}
+                onChange={(e) => setDeliveryMethod(e.target.value)}
+                required
               >
                 {modeOfDelivery.map((item, i) => (
                   <option key={i} value={item}>

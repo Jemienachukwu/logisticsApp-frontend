@@ -17,7 +17,7 @@ import { BsFillEyeFill } from "react-icons/bs";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../actions/UserAction";
+import { userRegister } from "../actions/UserAction";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -44,18 +44,11 @@ const Register = () => {
   }, [userInfo, navigate]);
 
   const handleSubmit = (e) => {
-    console.log({
-      fullName,
-      category,
-      email,
-      password,
-      phone,
-    });
     e.preventDefault();
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(fullName, category, email, password, phone));
+      dispatch(userRegister(fullName, category, email, password, phone));
     }
   };
 

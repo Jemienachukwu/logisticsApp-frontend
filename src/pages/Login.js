@@ -15,7 +15,7 @@ import { GrFormViewHide } from "react-icons/gr";
 import { BsFillEyeFill } from "react-icons/bs";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { Login } from "../actions/UserAction";
+import { userLogin } from "../actions/UserAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const LoginScreen = () => {
@@ -27,7 +27,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const { userInfo, loading, error } = useSelector((state) => state.userLogin);
-  console.log(userInfo);
+
   useEffect(() => {
     if (userInfo) {
       navigate("/dashboard");
@@ -36,7 +36,7 @@ const LoginScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(Login(email, password));
+    dispatch(userLogin(email, password));
   };
 
   return (

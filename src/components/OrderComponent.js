@@ -1,6 +1,6 @@
 import { Container, Text, Grid, Box, Button, Spinner } from "@chakra-ui/react";
-import { CiDeliveryTruck } from "react-icons/ci";
-import { VscPackage } from "react-icons/vsc";
+import { TbTruckDelivery } from "react-icons/tb";
+import { BiPackage } from "react-icons/bi";
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +51,7 @@ const OrderComponent = () => {
                 <Text as="sub" color="#868686">
                   {items.deliveredAt}
                 </Text>
-                <CiDeliveryTruck />
+                <TbTruckDelivery />
                 <Text as="sub" color="#868686">
                   {items.shippingAddress}
                 </Text>
@@ -60,7 +60,7 @@ const OrderComponent = () => {
                 <Text as="sub" color="#868686">
                   {items.deliveredAt}
                 </Text>
-                <VscPackage />
+                <BiPackage />
                 <Text as="sub" color="#868686">
                   {items.deliveryAddress}
                 </Text>

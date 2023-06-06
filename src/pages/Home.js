@@ -2,19 +2,26 @@ import {
   Box,
   Button,
   Container,
-  Image,
+  Flex,
   Input,
   InputGroup,
   InputLeftAddon,
   Select,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { HomeVerify } from "../actions/UserAction";
+import Footer from "../components/Footer";
 
-import logo from "../assets/logo.png";
+// import logo from "../assets/logo.png";
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const products = [
     { name: "Furniture" },
     { name: "Food" },
@@ -30,17 +37,23 @@ const Home = () => {
   const [category, setCategory] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  console.log({ phone, email });
+  const { userInfo } = useSelector((state) => state.homeVerify);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(HomeVerify(email, phone));
+    if (userInfo?.message === "login") {
+      navigate("/login");
+    } else {
+      navigate("/register");
+    }
+  };
+
   return (
     <>
-      <Box
-        w="100vw"
-        boxShadow="xl"
-        display="flex"
-        justifyContent="space-between"
-        p="2"
-      >
-        <Image src={logo} alt="logo" h="50px" />
+      <Flex w="100vw" display="flex" justifyContent="space-between" p="2">
+        <Spacer />
         <Box>
           <Link to="/login">
             <Button bg="#000" color="#fff" _hover={{ bg: "#000" }}>
@@ -58,15 +71,13 @@ const Home = () => {
             </Button>
           </Link>
         </Box>
-      </Box>
-      <Container mt="10">
-        <Text fontSize="5xl" as="b" lineHeight="none">
+      </Flex>
+      <Container my="7em">
+        <Text fontSize={["4xl", "5xl"]} as="b" lineHeight="none">
           Got an order you want to deliver ?
         </Text>
-        <Text my="4">
-          List your item and let delivery companies compete for your job.
-        </Text>
-        <form>
+        <Text my="4">Rest assured your package is in good hands</Text>
+        <form onSubmit={handleSubmit}>
           <Select
             placeholder="Select Order Category"
             value={category}
@@ -101,13 +112,12 @@ const Home = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </InputGroup>
-          <Link to="/login">
-            <Button bg="#35B368" color="#fff" width="100%" type="submit">
-              Get Started
-            </Button>
-          </Link>
+          <Button bg="#35B368" color="#fff" width="100%" type="submit">
+            Get Started
+          </Button>
         </form>
       </Container>
+      {/* <Footer /> */}
     </>
   );
 };

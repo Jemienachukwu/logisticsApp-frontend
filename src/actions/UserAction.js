@@ -4,12 +4,41 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_PROFILE_FAIL,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from "../constants/userConstants";
 
-export const Login = (email, password) => async (dispatch) => {
+export const HomeVerify = (email, phoneNumber) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "HOME_VERIFY_REQUEST",
+    });
+
+    const { data } = await axios.post(
+      "http://localhost:8000/api/users/verify",
+      { email, phoneNumber }
+    );
+
+    dispatch({
+      type: "HOME_VERIFY_SUCCESS",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "HOME_VERIFY_FAIL",
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const userLogin = (email, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -40,11 +69,12 @@ export const Login = (email, password) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
+export const userLogout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
 };
-export const register =
+
+export const userRegister =
   (fullName, category, email, password, phoneNumber) => async (dispatch) => {
     try {
       dispatch({
@@ -79,3 +109,38 @@ export const register =
       });
     }
   };
+
+export const UserProfile = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_PROFILE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      "http://localhost:8000/api/users/profile",
+
+      config
+    );
+    dispatch({
+      type: USER_PROFILE_SUCCESS,
+      payload: data,
+    });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
